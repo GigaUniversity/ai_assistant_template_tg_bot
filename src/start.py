@@ -1,15 +1,15 @@
 import asyncio
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
-
+from aiogram.fsm.storage.memory import MemoryStorage
 
 from config import Config as config
 from handlers import router
 
-
 bot = Bot(token=config.bot_token, parse_mode=ParseMode.HTML)
-dp = Dispatcher()
+dp = Dispatcher(storage=MemoryStorage())
 dp.include_router(router)
+
 
 async def on_startup_echo():
     text = 'Bot is started'
