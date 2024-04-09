@@ -13,7 +13,7 @@ router = Router(name='main_router')
 
 @router.message(CommandStart())
 async def hello(message: Message, bot: Bot):
-    await bot.send_message(chat_id=message.chat.id, text=service_messages.hello_message())
+    await bot.send_message(chat_id=message.chat.id, text=service_messages.hello_message(name_of_uni=Config.name_of_uni))
 
 
 @router.message()
@@ -24,7 +24,7 @@ async def take_query_from_user(message: Message, bot: Bot, state: FSMContext):
         'current_question': message.text,
         'dialog_style': 'standart',
         'university': Config.id_of_uni,
-        'datetime': message.date,
+        'datetime': message.date.strftime('%Y-%m-%d %H:%M:%S'),
         'chat_id': message.chat.id,
         'message_id': message.message_id,
         'gigachat_token': Config.gigachat_token,
