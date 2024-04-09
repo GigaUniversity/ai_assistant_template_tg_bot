@@ -3,23 +3,23 @@ from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
 
-from config import Config as config
+from config import Config
 from handlers import router
 
-bot = Bot(token=config.bot_token, parse_mode=ParseMode.HTML)
+bot = Bot(token=Config.bot_token, parse_mode=ParseMode.HTML)
 dp = Dispatcher(storage=MemoryStorage())
 dp.include_router(router)
 
 
 async def on_startup_echo():
     text = 'Bot is started'
-    await bot.send_message(chat_id=config.admin_id,
+    await bot.send_message(chat_id=Config.admin_id,
                            text=text)
 
 
 async def on_shutdown_echo():
     text = 'Bot is shutdown'
-    await bot.send_message(chat_id=config.admin_id,
+    await bot.send_message(chat_id=Config.admin_id,
                            text=text)
 
 
