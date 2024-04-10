@@ -4,7 +4,7 @@ from config import Config
 
 async def connect_to_gigachat(query: dict):
     async with aiohttp.ClientSession() as session:
-        async with session.get(url=Config.url_to_api, json=query) as response:
+        async with session.get(url=Config.url_to_api, params=query) as response:
             return await response.json()
 
 
