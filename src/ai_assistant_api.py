@@ -9,9 +9,9 @@ async def get_query(query: dict, endpoint: str):
             return await response.json()
 
 
-async def post_query(data: dict, endpoint: str):
+async def post_query(params: dict, endpoint: str):
     async with aiohttp.ClientSession() as session:
-        async with session.post(url=f"{Config.url_to_api}/{endpoint}", data=data) as response:
+        async with session.post(url=f"{Config.url_to_api}/{endpoint}", params=params) as response:
             return response.status
 
 
@@ -21,7 +21,7 @@ async def get_answer_from_api(query: dict):
 
 
 async def send_feedback_to_api(data: dict):
-    status_code = await post_query(data=data, endpoint='feedback')
+    status_code = await post_query(params=data, endpoint='feedback')
     if status_code == 200:
         logger.info("Successfully sent feedback to kernel")
     else:
