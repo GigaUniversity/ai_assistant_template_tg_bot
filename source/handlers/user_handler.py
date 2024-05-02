@@ -46,7 +46,7 @@ async def take_query_from_user(message: Message, bot: Bot, state: FSMContext):
     text = service_messages.answer_message(response=response)
     await bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id,
                                 text=text, reply_markup=keyboards.answer_keyboard())
-    logger.info(f'Пользователь {message.from_user.id} на вопрос {message.text} получил ответ {response['final_answer']}')
+    logger.info(f'Пользователь {message.from_user.id} на вопрос {message.text} получил ответ {response["final_answer"]}')
 
 
 @router.callback_query(F.data == 'button_show_relevant_links')
