@@ -5,13 +5,13 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.client.bot import DefaultBotProperties
 
 from source.config import Config
-from source.handlers.user_message import router
+from source.handlers import user_router
 from source.utils.logger_settings import logger
 
 default_properties = DefaultBotProperties(parse_mode=ParseMode.HTML)
 bot = Bot(token=Config.bot_token, default=default_properties)
 dp = Dispatcher(storage=MemoryStorage())
-dp.include_router(router)
+dp.include_router(user_router)
 
 
 async def on_startup_echo():
