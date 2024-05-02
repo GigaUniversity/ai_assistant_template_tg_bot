@@ -8,6 +8,7 @@ from source.keyboards import keyboards
 from source.config import Config
 from source.utils.ai_assistant_api import get_answer_from_api, send_feedback_to_api
 from source.utils.logger_settings import reaction_logger, logger
+from source.utils.cache_interactions import form_the_dict_all_responses
 
 router = Router(name='main_router')
 
@@ -41,12 +42,17 @@ async def take_query_from_user(message: Message, bot: Bot, state: FSMContext):
         'access_token': Config.access_token,
     }
     response = await get_answer_from_api(query=query)
-    await state.update_data(response=response)
+    current_response = {msg.message_id: response}
+    data = await state.get_data()
+    all_responses = await form_the_dict_all_responses(all_responses=data.get('all_responses'),
+                                                      current_response=current_response)
+    await state.update_data(all_responses=all_responses)
 
     text = service_messages.answer_message(response=response)
     await bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id,
                                 text=text, reply_markup=keyboards.answer_keyboard())
-    logger.info(f'Пользователь {message.from_user.id} на вопрос {message.text} получил ответ {response.get("final_answer")}')
+    logger.info(
+        f'Пользователь {message.from_user.id} на вопрос {message.text} получил ответ {response.get("final_answer")}')
 
 
 @router.callback_query(F.data == 'button_show_relevant_links')
@@ -55,12 +61,16 @@ async def button_show_relevant_links(call: CallbackQuery, bot: Bot, state: FSMCo
     Обрабатываем кнопку показа релевантных ссылок
     """
     data = await state.get_data()
-    response = data['response']
+    all_responses = data.get('all_responses')
+    response = all_responses.get(str(call.message.message_id))
+
     text = service_messages.show_relevant_links()
-    await bot.send_message(chat_id=call.message.chat.id, text=text, reply_markup=keyboards.list_of_relevant_links(response))
+    await call.answer()
+    await bot.send_message(chat_id=call.message.chat.id, text=text,
+                           reply_markup=keyboards.list_of_relevant_links(response))
 
 
-@router.callback_query(F.data == 'button_answer_dislike' or F.data == 'button_answer_like')
+@router.callback_query((F.data == 'button_answer_dislike') | (F.data == 'button_answer_like'))
 async def button_answer_reaction(call: CallbackQuery, bot: Bot):
     """
     Обрабатываем кнопку Лайка или Дизлайка
