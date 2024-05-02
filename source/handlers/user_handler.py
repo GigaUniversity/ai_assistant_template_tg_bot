@@ -42,7 +42,7 @@ async def take_query_from_user(message: Message, bot: Bot, state: FSMContext):
         'access_token': Config.access_token,
     }
     response = await get_answer_from_api(query=query)
-    current_response = {msg.message_id: response}
+    current_response = {f'{msg.message_id}': response}
     data = await state.get_data()
     all_responses = await form_the_dict_all_responses(all_responses=data.get('all_responses'),
                                                       current_response=current_response)
