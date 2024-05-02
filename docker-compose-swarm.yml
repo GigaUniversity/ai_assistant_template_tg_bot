@@ -18,6 +18,8 @@ services:
           memory: '512M'
     volumes:
       - ./logs:/app/logs
+    networks:
+      - network
     environment:
       - TELEGRAM_BOT_TOKEN=
       - ACCESS_TOKEN=
@@ -25,3 +27,8 @@ services:
       - NAME_OF_UNI=
       - URL_TO_API=
       - ADMIN_ID=
+
+
+networks:
+  network:
+    driver: overlay
