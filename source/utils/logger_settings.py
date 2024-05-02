@@ -2,6 +2,8 @@ import os
 from datetime import datetime, timedelta, timezone
 import logging.config
 
+from source.config import Config
+
 # Установка часового пояса
 moscow_tz = timezone(timedelta(hours=3), name='MSC')
 now = datetime.now(tz=moscow_tz)
@@ -11,7 +13,7 @@ path_to_logs = os.path.dirname(os.getcwd())
 path_to_logs = os.path.join(path_to_logs, 'logs')
 os.makedirs(path_to_logs, exist_ok=True)
 
-file_name = f'{path_to_logs}/{now.strftime("%d_%m_%Y_time_%H_%M_%S")}.log'
+file_name = f'{path_to_logs}/{Config.id_of_uni}_{now.strftime("%d_%m_%Y_time_%H_%M_%S")}.log'
 
 
 logger_config = {
