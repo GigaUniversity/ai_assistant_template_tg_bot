@@ -12,6 +12,10 @@ services:
       placement:
         constraints:
           - node.role == manager
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: '512M'
     volumes:
       - ./logs:/app/logs
     environment:

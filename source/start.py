@@ -15,6 +15,7 @@ dp.include_router(router)
 
 
 async def on_startup_echo():
+    await bot.set_my_commands(commands=Config.commands_for_bot)
     text = 'Bot is started'
     logger.info(f'Bot for UNI "{Config.name_of_uni}" is started')
     await bot.send_message(chat_id=Config.admin_id,

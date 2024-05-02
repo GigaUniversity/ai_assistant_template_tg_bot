@@ -1,9 +1,4 @@
-from ujson import loads
-
-
-async def parse_string_in_json(json_str: str) -> dict:
-    json_dict = loads(json_str)
-    return json_dict
+from source.utils.files_interactions import parse_string_in_json
 
 
 async def form_the_dict_all_responses(all_responses: dict, current_response: dict):

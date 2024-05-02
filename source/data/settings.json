@@ -1,0 +1,31 @@
+{
+  "styles_of_dialog": [
+    {
+      "style_name": "Стандартный \uD83D\uDE42",
+      "style_id": "standart"
+    },
+    {
+      "style_name": "Педантичный \uD83C\uDF93",
+      "style_id": "pedantic"
+    },
+    {
+      "style_name": "Молодёжный \uD83D\uDE0E",
+      "style_id": "slang"
+    }
+  ],
+  "link_to_feedback": "https://oprosso.ru/p/xhKWdRr3jFG9aqAPD",
+  "commands_for_bot": [
+    {
+      "command": "start",
+      "description": "Запустить бота"
+    },
+    {
+      "command": "styles",
+      "description": "Выбрать стиль диалога"
+    },
+    {
+      "command": "feedback",
+      "description": "Оставить отзыв"
+    }
+  ]
+}
