@@ -1,6 +1,6 @@
 import aiohttp
-from config import Config
-from src.logger_settings import logger
+from source.config import Config
+from source.utils.logger_settings import logger
 
 
 async def get_query(query: dict, endpoint: str):

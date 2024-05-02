@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  your_uni:
+    image: ai_assistant_template_tg_bot:latest
+    build:
+      dockerfile: Dockerfile
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      placement:
+        constraints:
+          - node.role == manager
+    volumes:
+      - ./logs:/app/logs
+    environment:
+      - TELEGRAM_BOT_TOKEN=
+      - ACCESS_TOKEN=
+      - UNI_ID=
+      - NAME_OF_UNI=
+      - URL_TO_API=
+      - ADMIN_ID=

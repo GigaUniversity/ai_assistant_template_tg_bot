@@ -3,11 +3,11 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command, CommandStart, CommandObject
 from aiogram.fsm.context import FSMContext
 
-import service_messages
-import keyboards
-from config import Config
-from ai_assistant_api import get_answer_from_api, send_feedback_to_api
-from logger_settings import reaction_logger, logger
+from source.messages import service_messages
+from source.keyboards import keyboards
+from source.config import Config
+from source.utils.ai_assistant_api import get_answer_from_api, send_feedback_to_api
+from source.utils.logger_settings import reaction_logger, logger
 
 router = Router(name='main_router')
 
