@@ -5,7 +5,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.client.bot import DefaultBotProperties
 
 from source.config import Config
-from source.handlers.user_handler import router
+from source.handlers.user_message import router
 from source.utils.logger_settings import logger
 
 default_properties = DefaultBotProperties(parse_mode=ParseMode.HTML)

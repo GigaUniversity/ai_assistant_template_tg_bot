@@ -1,6 +1,5 @@
 from aiogram import Bot, Router, F
 from aiogram.types import Message, CallbackQuery
-from aiogram.filters import Command, CommandStart, CommandObject
 from aiogram.fsm.context import FSMContext
 
 from source.messages import service_messages
@@ -10,16 +9,10 @@ from source.utils.ai_assistant_api import get_answer_from_api, send_feedback_to_
 from source.utils.logger_settings import reaction_logger, logger
 from source.utils.cache_interactions import form_the_dict_all_responses
 
-router = Router(name='main_router')
+user_message_router = Router(name='user_message_router')
 
 
-@router.message(CommandStart())
-async def hello(message: Message, bot: Bot):
-    logger.info(f'Пользователь {message.from_user.id} написал команду /start')
-    await bot.send_message(chat_id=message.chat.id, text=service_messages.hello_message(name_of_uni=Config.name_of_uni))
-
-
-@router.message()
+@user_message_router.message()
 async def take_query_from_user(message: Message, bot: Bot, state: FSMContext):
     """
     Обрабатываем ответ
@@ -55,7 +48,7 @@ async def take_query_from_user(message: Message, bot: Bot, state: FSMContext):
         f'Пользователь {message.from_user.id} на вопрос {message.text} получил ответ {response.get("final_answer")}')
 
 
-@router.callback_query(F.data == 'button_show_relevant_links')
+@user_message_router.callback_query(F.data == 'button_show_relevant_links')
 async def button_show_relevant_links(call: CallbackQuery, bot: Bot, state: FSMContext):
     """
     Обрабатываем кнопку показа релевантных ссылок
@@ -70,7 +63,7 @@ async def button_show_relevant_links(call: CallbackQuery, bot: Bot, state: FSMCo
                            reply_markup=keyboards.list_of_relevant_links(response))
 
 
-@router.callback_query((F.data == 'button_answer_dislike') | (F.data == 'button_answer_like'))
+@user_message_router.callback_query((F.data == 'button_answer_dislike') | (F.data == 'button_answer_like'))
 async def button_answer_reaction(call: CallbackQuery, bot: Bot):
     """
     Обрабатываем кнопку Лайка или Дизлайка
@@ -87,23 +80,3 @@ async def button_answer_reaction(call: CallbackQuery, bot: Bot):
     await call.answer(text=text)
     await send_feedback_to_api(data=reaction_info)
 
-
-@router.message(Command('styles'))
-async def command_styles(message: Message, bot: Bot):
-    """
-    Обработчик команды по поводу смены стиля диалога
-    """
-    await bot.send_message(chat_id=message.chat.id, text=service_messages.choose_your_style(),
-                           reply_markup=keyboards.choose_the_style(styles_list=Config.styles_of_dialog))
-
-
-@router.callback_query(F.data.startswith("choose_the_style"))
-async def choose_the_uni(bot: Bot, call: CallbackQuery, state: FSMContext):
-    """
-    Выбор конкретного стиля диалога
-    """
-    _, dialog_style = call.data.split('|')
-    name_of_dialog = call.message.reply_markup.inline_keyboard[0][0].text
-    await state.update_data(dialog_style=dialog_style)
-    await bot.send_message(chat_id=call.message.chat.id,
-                           text=service_messages.success_choose_dialog_style(name_of_dialog))
