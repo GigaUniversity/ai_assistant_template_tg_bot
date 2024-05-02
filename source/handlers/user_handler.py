@@ -63,6 +63,8 @@ async def button_show_relevant_links(call: CallbackQuery, bot: Bot, state: FSMCo
     data = await state.get_data()
     all_responses = data.get('all_responses')
     response = all_responses.get(str(call.message.message_id))
+    logger.debug(response)
+    logger.debug(all_responses)
 
     text = service_messages.show_relevant_links()
     await call.answer()
