@@ -4,7 +4,7 @@ from aiogram.enums import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.client.bot import DefaultBotProperties
 
-from config import Config
+from source.config import Config
 from source.handlers.user_handler import router
 
 default_properties = DefaultBotProperties(parse_mode=ParseMode.HTML)
