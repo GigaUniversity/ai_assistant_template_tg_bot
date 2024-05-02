@@ -36,12 +36,11 @@ async def take_query_from_user(message: Message, bot: Bot, state: FSMContext):
         'dialog_style': dialog_style,
         'chat_id': message.chat.id,
         'source': 'telegram',
-        'datetime': message.date.strftime('%Y-%m-%d %H:%M:%S'),
+        'datetime_msg': message.date.strftime('%Y-%m-%d %H:%M:%S'),
         'message_id': message.message_id,
         'access_token': Config.access_token,
     }
     response = await get_answer_from_api(query=query)
-    logger.debug(response)
     await state.update_data(response=response)
 
     text = service_messages.answer_message(response=response)
