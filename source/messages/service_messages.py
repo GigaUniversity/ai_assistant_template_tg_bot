@@ -4,7 +4,6 @@ def hello_message(name_of_uni: str):
 
 
 def answer_message(response: dict):
-    print(response)
     answer_from_gigachat = response.get('final_answer')
     service_message = '<i>(Бот работает в тестовом режиме - не все ответы могут быть достоверными)</i>'
     author = '<b>Ответ сгенерирован языковой моделью GigaChat</b>'

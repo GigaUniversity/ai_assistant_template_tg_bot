@@ -41,6 +41,7 @@ async def take_query_from_user(message: Message, bot: Bot, state: FSMContext):
         'access_token': Config.access_token,
     }
     response = await get_answer_from_api(query=query)
+    logger.debug(response)
     await state.update_data(response=response)
 
     text = service_messages.answer_message(response=response)
