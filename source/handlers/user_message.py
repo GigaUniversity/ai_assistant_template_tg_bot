@@ -26,10 +26,12 @@ async def hello(message: Message, bot: Bot):
     for status in table_status:
         if table_status[status] == "True":
             list_of_tables.append(status)
-    
-    await bot.send_message(chat_id=message.chat.id, text=messages.hello_message(name_of_uni=Config.NAME_OF_UNI),
-                           reply_markup=keyboards.choose_the_type_of_content(list_of_tables=list_of_tables))
-    
+    if len(list_of_tables) == 1:
+        await bot.send_message(chat_id=message.chat.id, text=messages.hello_message(name_of_uni=Config.NAME_OF_UNI))
+    else:
+        await bot.send_message(chat_id=message.chat.id, text=messages.choose_type_content(name_of_uni=Config.NAME_OF_UNI),
+                               reply_markup=keyboards.choose_the_type_of_content(list_of_tables=list_of_tables))
+
 
 @user_message_router.callback_query(F.data.startswith("choose_the_content_type"))
 async def wait_for_your_question(call: CallbackQuery, state: FSMContext, bot: Bot):

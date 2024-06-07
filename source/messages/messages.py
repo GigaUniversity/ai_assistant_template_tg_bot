@@ -1,7 +1,10 @@
 def hello_message(name_of_uni: str):
-    text = f'- Привет, я AI-помощник для <b>{name_of_uni}</b>.\n\nЗадай мне свой вопрос!'
+    text = f'- Привет, я AI-помощник для <b>{name_of_uni}</b>.\n\nЗадай свой вопрос!'
     return text
 
+def choose_type_content(name_of_uni: str):
+    text = f'- Привет, я AI-помощник для <b>{name_of_uni}</b>.\n\nВыбери тип контента!'
+    return text
 
 def answer_message(response: dict):
     answer_from_gigachat = response.get('final_answer')
@@ -49,6 +52,6 @@ def wait_for_question(uni_name: str, content_description: str, website: str):
     website = website.strip()
     text = (f"Буду рад найти информацию по {uni_name}.\n\n"
             f"{content_description}\n\n"
-            f"Задай мне свой вопрос.\n\n"
+            f"Задай мне свой вопрос!\n\n"
             f"<i>Официальный веб-сайт ВУЗа: \n{website}</i>")
     return text
