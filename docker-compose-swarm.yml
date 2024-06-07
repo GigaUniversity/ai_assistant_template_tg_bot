@@ -3,8 +3,6 @@ version: '3.7'
 services:
   your_uni:
     image: ai_assistant_template_tg_bot:latest
-    build:
-      dockerfile: Dockerfile
     deploy:
       replicas: 1
       restart_policy:

@@ -34,3 +34,21 @@ def success_choose_dialog_style(name_of_style):
     text = (f"{name_of_style} стиль диалога успешно выбран!\n"
             f"Теперь вы можете задать свой вопрос и я отвечу в выбранном стиле 😊")
     return text
+
+
+def please_take_the_survey(url):
+    feedback_url = f'<a href="{url}">ссылке</a>'
+    text = f"Будем рады, если Вы пройдете опрос о качестве AI-помощника по данной {feedback_url}."
+    return text
+
+
+def wait_for_question(uni_name: str, content_description: str, website: str):
+    content_description = content_description.strip()
+    if content_description[-1] != ".":
+        content_description += "."
+    website = website.strip()
+    text = (f"Буду рад найти информацию по {uni_name}.\n\n"
+            f"{content_description}\n\n"
+            f"Задай мне свой вопрос.\n\n"
+            f"<i>Официальный веб-сайт ВУЗа: \n{website}</i>")
+    return text

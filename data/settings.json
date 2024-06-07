@@ -24,7 +24,7 @@
       "description": "Выбрать стиль диалога"
     },
     {
-      "command": "feedback",
+      "command": "take_the_survey",
       "description": "Оставить отзыв"
     }
   ]
