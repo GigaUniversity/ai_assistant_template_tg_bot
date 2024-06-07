@@ -40,7 +40,6 @@ async def wait_for_your_question(call: CallbackQuery, state: FSMContext, bot: Bo
     Сообщение с ожиданием вопроса
     """
     _, content_type = call.data.split('|')
-    data = await state.get_data()
     naming_of_table = {"basic": "Обычная информация",
                        "news": "Новости",
                        "timetable": "Расписание",
@@ -61,6 +60,7 @@ async def wait_for_your_question(call: CallbackQuery, state: FSMContext, bot: Bo
                                 message_id=call.message.message_id,
                                 reply_markup=None)
     await state.update_data(content_type=content_type)
+
 
 @user_message_router.message()
 async def take_query_from_user(message: Message, bot: Bot, state: FSMContext):
@@ -86,19 +86,17 @@ async def take_query_from_user(message: Message, bot: Bot, state: FSMContext):
         'content_type': content_type
     }
     response = await get_query(params=query, endpoint='/answer')
-    current_response = {f'{msg.message_id}': response}
-    all_responses = await form_the_dict_all_responses(all_responses=data.get('all_responses'),
-                                                        current_response=current_response)
-    await state.update_data(all_responses=all_responses)
 
     text = messages.answer_message(response=response)
-    await bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id,
-                                text=text, reply_markup=keyboards.answer_keyboard())
+    msg = await bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id,
+                                        text=text, reply_markup=keyboards.answer_keyboard())
     
-    logger.info(
-        f'Пользователь {message.from_user.id} на вопрос {message.text} получил ответ {response.get("final_answer")}')
+    current_response = {f'{msg.message_id}': response}
+    all_responses = await form_the_dict_all_responses(all_responses=data.get('all_responses'),
+                                                      current_response=current_response)
+    await state.update_data(all_responses=all_responses)
+    logger.info(f'Пользователь {message.from_user.id} на вопрос {message.text} получил ответ {response.get("final_answer")}')
     
-
 
 @user_message_router.callback_query(F.data == 'button_show_relevant_links')
 async def button_show_relevant_links(call: CallbackQuery, bot: Bot, state: FSMContext):
