@@ -1,6 +1,5 @@
 import aiohttp
 from source.config import Config
-from source.utils.logger_settings import logger
 
 headers = {'Authorization': 'Bearer ' + Config.ACCESS_TOKEN}
 

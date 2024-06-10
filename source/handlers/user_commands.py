@@ -1,6 +1,6 @@
 from aiogram import Bot, Router, F
 from aiogram.types import Message, CallbackQuery
-from aiogram.filters import Command, CommandStart
+from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 
 from source.messages import messages

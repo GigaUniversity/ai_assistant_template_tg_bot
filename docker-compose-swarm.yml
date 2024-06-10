@@ -2,6 +2,7 @@ version: '3.7'
 
 x-common-environment: &common-environment
   URL_TO_API: 
+  ADMIN_ID:
 
 services:
   your_uni:
@@ -26,8 +27,6 @@ services:
       TELEGRAM_BOT_TOKEN:
       ACCESS_TOKEN: 
       UNI_ID:
-      NAME_OF_UNI:
-      ADMIN_ID:
 
 
 networks:

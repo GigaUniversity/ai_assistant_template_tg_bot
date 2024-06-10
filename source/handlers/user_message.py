@@ -21,15 +21,17 @@ async def hello(message: Message, bot: Bot):
     
     json_path = os.path.join(Config.PROJECT_DIR, "data", "uni_info.json")
     uni_info = files_interactions.json_loads(json_path=json_path)
-    list_of_tables = []
     table_status = uni_info.get("table_status")
+    name_of_uni = uni_info.get("uni_name")
+    
+    list_of_tables = []
     for status in table_status:
         if table_status[status] == "True":
             list_of_tables.append(status)
     if len(list_of_tables) == 1:
-        await bot.send_message(chat_id=message.chat.id, text=messages.hello_message(name_of_uni=Config.NAME_OF_UNI))
+        await bot.send_message(chat_id=message.chat.id, text=messages.hello_message(name_of_uni=name_of_uni))
     else:
-        await bot.send_message(chat_id=message.chat.id, text=messages.choose_type_content(name_of_uni=Config.NAME_OF_UNI),
+        await bot.send_message(chat_id=message.chat.id, text=messages.choose_type_content(name_of_uni=name_of_uni),
                                reply_markup=keyboards.choose_the_type_of_content(list_of_tables=list_of_tables))
 
 
@@ -52,9 +54,10 @@ async def wait_for_your_question(call: CallbackQuery, state: FSMContext, bot: Bo
     table_description = uni_info.get('table_description')
     content_description = table_description[content_type]
     website = uni_info.get("website")
+    name_of_uni = uni_info.get("uni_name")
 
     await bot.edit_message_text(chat_id=call.message.chat.id,
-                                text=messages.wait_for_question(uni_name=Config.NAME_OF_UNI,
+                                text=messages.wait_for_question(uni_name=name_of_uni,
                                                                 content_description=content_description,
                                                                 website=website),
                                 message_id=call.message.message_id,
