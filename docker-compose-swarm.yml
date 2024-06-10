@@ -1,5 +1,8 @@
 version: '3.7'
 
+x-common-environment: &common-environment
+  URL_TO_API: 
+
 services:
   your_uni:
     image: ai_assistant_template_tg_bot:latest
@@ -19,12 +22,12 @@ services:
     networks:
       - network
     environment:
-      - TELEGRAM_BOT_TOKEN=
-      - ACCESS_TOKEN=
-      - UNI_ID=
-      - NAME_OF_UNI=
-      - URL_TO_API=
-      - ADMIN_ID=
+      <<: *common-environment
+      TELEGRAM_BOT_TOKEN:
+      ACCESS_TOKEN: 
+      UNI_ID:
+      NAME_OF_UNI:
+      ADMIN_ID:
 
 
 networks:

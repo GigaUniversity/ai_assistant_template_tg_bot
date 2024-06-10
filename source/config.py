@@ -1,8 +1,5 @@
 from dataclasses import dataclass
 import os
-import asyncio
-
-from source.utils.files_interactions import json_loads
 
 @dataclass
 class Config:
