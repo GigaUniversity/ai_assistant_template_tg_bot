@@ -12,7 +12,7 @@ now = datetime.now(tz=moscow_tz)
 path_to_logs = os.path.join(Config.PROJECT_DIR, 'logs')
 os.makedirs(path_to_logs, exist_ok=True)
 
-file_name = f'{path_to_logs}/{Config.id_of_uni}_{now.strftime("%d_%m_%Y_time_%H_%M_%S")}.log'
+file_name = f'{path_to_logs}/{Config.UNI_ID}_{now.strftime("%d_%m_%Y_time_%H_%M_%S")}.log'
 
 
 logger_config = {
