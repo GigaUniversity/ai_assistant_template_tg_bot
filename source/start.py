@@ -26,7 +26,7 @@ async def on_startup():
         logger.info(is_downloaded)
     else:
         is_downloaded = "Failed download uni info :("
-        logger.warning(is_downloaded + str(json_data))
+        logger.warning(is_downloaded + " Response: " + str(json_data))
     
     bot_info = await bot.get_me()
     text = 'Bot is started'
