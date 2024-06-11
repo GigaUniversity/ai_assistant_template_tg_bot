@@ -9,6 +9,7 @@ from source.handlers import user_router
 from source.utils.logger_settings import logger
 from source.utils import files_interactions
 
+# Инициализация объектов Диспетчера и Бота.
 default_properties = DefaultBotProperties(parse_mode=ParseMode.HTML)
 bot = Bot(token=Config.TELEGRAM_BOT_TOKEN, default=default_properties)
 dp = Dispatcher(storage=MemoryStorage())
@@ -16,6 +17,12 @@ dp.include_router(user_router)
 
 
 async def on_startup():
+    """
+    Функция, срабатывающая при запуске бота.
+    Происходит подгрузка настроек, установка команд.
+    Скачивается и сохраняется информация по университету.
+    Сообщается Админу, что бот запущен.
+    """
     settings = await files_interactions.json_loads(json_path=Config.SETTING_PATH)
     commands = settings.get('commands_for_bot')
     await bot.set_my_commands(commands=commands)
@@ -37,6 +44,10 @@ async def on_startup():
 
 
 async def on_shutdown():
+    """
+    Функция, срабатывающая при выключении бота.
+    Сообщается Админу, что бот остановлен.
+    """
     bot_info = await bot.get_me()
     text = 'Bot is shutdown'
     logger.info(f'Bot "{bot_info.username}" is shutdown')

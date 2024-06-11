@@ -3,6 +3,7 @@ from source.utils.files_interactions import parse_string_in_json
 
 async def form_the_dict_all_responses(all_responses: dict, current_response: dict):
     """
+    Функция ротации запросов в памяти.
     Если были запросы,
     то соединение предыдущих запросов с новым, а также удаление из истории старых ответов,
     иначе это первый запрос в истории

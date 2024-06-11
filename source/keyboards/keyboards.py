@@ -1,6 +1,8 @@
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
+# В этом модуле лежат все Inline-клавиатуры
+
 def answer_keyboard():
     keyboard = InlineKeyboardBuilder()
     keyboard.button(text='📖 Релевантные источники', callback_data='button_show_relevant_links')
@@ -17,6 +19,9 @@ def answer_without_feedback_keyboard():
 
 
 def list_of_relevant_links(response: dict):
+    """
+    Показ релевантных ссылок
+    """
     keyboard = InlineKeyboardBuilder()
     added_urls = set()
 
@@ -30,6 +35,9 @@ def list_of_relevant_links(response: dict):
 
 
 def choose_the_style(styles_list: list):
+    """
+    Выбор стиля диалога
+    """
     keyboard = InlineKeyboardBuilder()
     for style in styles_list:
         keyboard.button(text=style['style_name'], callback_data=f"choose_the_style|{style['style_id']}")
@@ -38,6 +46,9 @@ def choose_the_style(styles_list: list):
 
 
 def choose_the_type_of_content(list_of_tables: list):
+    """
+    Выбором типа контента
+    """
     keyboard = InlineKeyboardBuilder()
 
     naming_of_table = {"basic": "Общая информация",

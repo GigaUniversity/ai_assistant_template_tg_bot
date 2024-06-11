@@ -1,3 +1,6 @@
+# В этом модуле лежат все сообщения, требуемые для работы бота
+
+
 def hello_message(name_of_uni: str):
     text = f'- Привет, я AI-помощник для <b>{name_of_uni}</b>.\n\nЗадай свой вопрос!'
     return text

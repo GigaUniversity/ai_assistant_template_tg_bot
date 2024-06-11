@@ -12,11 +12,16 @@ from source.utils.logger_settings import reaction_logger, logger
 from source.utils.cache_interactions import form_the_dict_all_responses
 from source.utils import files_interactions
 
+# Здесь находятся все обработчики, которые связаны с основной работой бота - первоначальная настройка и обработка вопросов пользователя
+
 user_message_router = Router(name='user_message_router')
 
 
 @user_message_router.message(CommandStart())
 async def hello(message: Message, bot: Bot):
+    """
+    /start
+    """
     logger.info(f'Пользователь {message.from_user.id} написал команду /start')
     
     json_path = os.path.join(Config.PROJECT_DIR, "data", "uni_info.json")

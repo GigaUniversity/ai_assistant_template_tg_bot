@@ -1,12 +1,12 @@
 version: '3.7'
 
-x-common-environment: &common-environment
-  URL_TO_API: 
-  ADMIN_ID:
 
 services:
-  your_uni:
+  tg_bot:
     image: ai_assistant_template_tg_bot:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     deploy:
       replicas: 1
       restart_policy:
@@ -23,10 +23,11 @@ services:
     networks:
       - network
     environment:
-      <<: *common-environment
-      TELEGRAM_BOT_TOKEN:
-      ACCESS_TOKEN: 
-      UNI_ID:
+      - URL_TO_API=${URL_TO_API}
+      - ADMIN_ID=${ADMIN_ID}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - ACCESS_TOKEN=${ACCESS_TOKEN}
+      - UNI_ID=${UNI_ID}
 
 
 networks:

@@ -6,8 +6,9 @@ from aiogram.fsm.context import FSMContext
 from source.messages import messages
 from source.keyboards import keyboards
 from source.config import Config
-from source.utils.logger_settings import logger
 from source.utils import files_interactions
+
+# Здесь лежат все обработчики комманд (за исключением /start)
 
 user_commands_router = Router(name='user_commands_router')
 

@@ -1,5 +1,4 @@
 import aiohttp
-from aiohttp.client_exceptions import ContentTypeError
 
 from source.utils.logger_settings import logger
 from source.config import Config
@@ -7,6 +6,9 @@ from source.config import Config
 headers = {'Authorization': 'Bearer ' + Config.ACCESS_TOKEN}
 
 async def get_query(params: dict, endpoint: str):
+    """
+    GET-Запрос
+    """
     url = f"{Config.URL_TO_API}{endpoint}"
     async with aiohttp.ClientSession() as session:
         async with session.get(headers=headers, url=url, params=params) as response:
@@ -23,12 +25,15 @@ async def get_query(params: dict, endpoint: str):
 
 
 async def post_query(params: dict, endpoint: str):
+    """
+    POST-Запрос
+    """
     url = f"{Config.URL_TO_API}{endpoint}"
     async with aiohttp.ClientSession() as session:
         async with session.post(headers=headers, url=url, params=params) as response:
             try:
                 return response.status
-            except ContentTypeError as e:
+            except Exception as e:
                 log_error_dict = {"where": "post_query",
                                   "url": url,
                                   "error": e,
