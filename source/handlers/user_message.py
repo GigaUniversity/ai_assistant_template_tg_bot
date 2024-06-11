@@ -72,24 +72,28 @@ async def take_query_from_user(message: Message, state: FSMContext, bot: Bot):
     Делаем запрос к API AI-Помощник
     Выдаём ответ от API AI-Помощник
     """
+    logger.info(f'Пользователь {message.from_user.id} задал вопрос: {message.text}')
+    
     data = await state.get_data()
     content_type = data.get('content_type', "basic")
+    dialog_style = data.get('dialog_style') if data.get('dialog_style') else 'standart'
     
-    logger.info(f'Пользователь {message.from_user.id} задал вопрос: {message.text}')
     text = messages.wait_for_answer()
     msg = await bot.send_message(chat_id=message.chat.id, text=text)
-    dialog_style = data.get('dialog_style') if data.get('dialog_style') else 'standart'
+    
+    # Формирование параметров запроса к API
     query = {
         'university': Config.UNI_ID,
         'current_question': message.text,
         'dialog_style': dialog_style,
-        'chat_id': message.chat.id,
+        'chat_id': message.from_user.id,
         'datetime_msg': message.date.strftime('%Y-%m-%d %H:%M:%S'),
         'message_id': message.message_id,
         'content_type': content_type
     }
     response = await get_query(params=query, endpoint='/answer')
 
+    logger.debug(response)
     text = messages.answer_message(response=response)
     msg = await bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id,
                                         text=text, reply_markup=keyboards.answer_keyboard())
