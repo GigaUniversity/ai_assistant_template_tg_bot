@@ -29,11 +29,18 @@ async def choose_the_uni(call: CallbackQuery, state: FSMContext, bot: Bot):
     Выбор конкретного стиля диалога
     """
     _, dialog_style = call.data.split('|')
-    name_of_dialog = call.message.reply_markup.inline_keyboard[0][0].text
+    name_of_dialog = ''
+    for button in call.message.reply_markup.inline_keyboard:
+        dict_button = button[0].__dict__
+        if dict_button.get('callback_data') == call.data:
+            name_of_dialog = dict_button.get('text')
+            break
     await state.update_data(dialog_style=dialog_style)
-    await bot.send_message(chat_id=call.message.chat.id,
-                           text=messages.success_choose_dialog_style(name_of_dialog))
-    
+    await bot.edit_message_text(chat_id=call.message.chat.id,
+                                text=messages.success_choose_dialog_style(
+                                    name_of_dialog),
+                                reply_markup=None,
+                                message_id=call.message.message_id)
     
 @user_commands_router.message(Command('take_the_survey'))
 async def command_styles(message: Message, bot: Bot):

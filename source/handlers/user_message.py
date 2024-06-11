@@ -20,7 +20,7 @@ async def hello(message: Message, bot: Bot):
     logger.info(f'Пользователь {message.from_user.id} написал команду /start')
     
     json_path = os.path.join(Config.PROJECT_DIR, "data", "uni_info.json")
-    uni_info = files_interactions.json_loads(json_path=json_path)
+    uni_info = await files_interactions.json_loads(json_path=json_path)
     table_status = uni_info.get("table_status")
     name_of_uni = uni_info.get("uni_name")
     
