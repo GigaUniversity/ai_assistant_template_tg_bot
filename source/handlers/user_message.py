@@ -91,18 +91,21 @@ async def take_query_from_user(message: Message, state: FSMContext, bot: Bot):
         'message_id': message.message_id,
         'content_type': content_type
     }
-    response = await get_query(params=query, endpoint='/answer')
-
-    logger.debug(response)
-    text = messages.answer_message(response=response)
-    msg = await bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id,
-                                        text=text, reply_markup=keyboards.answer_keyboard())
-    
-    current_response = {f'{msg.message_id}': response}
-    all_responses = await form_the_dict_all_responses(all_responses=data.get('all_responses'),
-                                                      current_response=current_response)
-    await state.update_data(all_responses=all_responses)
-    logger.info(f'Пользователь {message.from_user.id} на вопрос {message.text} получил ответ {response.get("final_answer")}')
+    response_json, response_status = await get_query(params=query, endpoint='/answer')
+    if response_status == 200:
+        text = messages.answer_message(response=response_json)
+        msg = await bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id,
+                                            text=text, reply_markup=keyboards.answer_keyboard())
+        
+        current_response = {f'{msg.message_id}': response_json}
+        all_responses = await form_the_dict_all_responses(all_responses=data.get('all_responses'),
+                                                        current_response=current_response)
+        await state.update_data(all_responses=all_responses)
+        logger.info(f'Пользователь {message.from_user.id} на вопрос {message.text} получил ответ {response_json.get("final_answer")}')
+    else:
+        text = messages.im_not_working()
+        await bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id,
+                                    text=text)
     
 
 @user_message_router.callback_query(F.data == 'button_show_relevant_links')

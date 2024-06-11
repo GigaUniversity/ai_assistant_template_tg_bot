@@ -55,3 +55,8 @@ def wait_for_question(uni_name: str, content_description: str, website: str):
             f"Задай мне свой вопрос!\n\n"
             f"<i>Официальный веб-сайт ВУЗа: \n{website}</i>")
     return text
+
+
+def im_not_working():
+    text = 'Я немного устал, но я отвечу сразу, как только отдохну :)'
+    return text
