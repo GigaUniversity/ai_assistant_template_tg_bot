@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import os
+from dotenv import load_dotenv
 
 @dataclass
 class Config:
@@ -12,6 +13,7 @@ class Config:
     PROJECT_DIR - путь к директории с проектом
     SETTING_PATH - путь к настройкам
     """
+    load_dotenv()
     TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
     ACCESS_TOKEN = os.environ.get('ACCESS_TOKEN')
     UNI_ID = os.environ.get('UNI_ID')

@@ -4,22 +4,32 @@
 
 ### Входные данные:
 ***
-* ***URL_TO_API*** - хост для подключения к проекту "AI-Помощник для ВУЗов"
-* ***ADMIN_ID*** - Telegram User.id идентификатор Администратора, у которого будут повышенные привелегии (в частности - уведомление о запуске и остановке бота)
+* ***URL_TO_API*** - хост для подключения к проекту _"AI-Помощник для ВУЗов"_
+* ***ADMIN_ID*** - _Telegram User.id_ идентификатор Администратора, у которого будут повышенные привелегии (в частности - уведомление о запуске и остановке бота)
 * ***TELEGRAM_BOT_TOKEN*** - Telegram Bot API-токен
-* ***ACCESS_TOKEN*** - API-токен для подключения к проекту "AI-Помощник для ВУЗов"
-* ***UNI_ID*** - идентификатор ВУЗа
+* ***ACCESS_TOKEN*** - API-токен для подключения к проекту _"AI-Помощник для ВУЗов"_
+* ***UNI_ID*** - идентификатор вашего ВУЗа
 
 
 ### Запуск
 ***
 #### Способ №1: Docker Swarm
-> docker swarm init # если Swarm не инициализирован\
-> docker stack deploy -c docker-compose-swarm.yml tg_bot
-
+```python
+docker swarm init
+docker stack deploy -c docker-compose-swarm.yml tg_bot
+```
 #### Способ №2: Docker Compose
-> docker-compose build\
-> docker-compose up -d
+```python
+docker-compose build
+docker-compose up -d
+```
+#### Способ №3: Manual Python
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python -m source.start
+```
 
 ### Структура проекта
 ***
