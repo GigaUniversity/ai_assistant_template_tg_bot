@@ -24,7 +24,7 @@ async def command_styles(message: Message, bot: Bot):
 
 
 @user_commands_router.callback_query(F.data.startswith("choose_the_style"))
-async def choose_the_uni(bot: Bot, call: CallbackQuery, state: FSMContext):
+async def choose_the_uni(call: CallbackQuery, state: FSMContext, bot: Bot):
     """
     Выбор конкретного стиля диалога
     """

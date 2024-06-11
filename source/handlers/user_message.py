@@ -50,7 +50,7 @@ async def wait_for_your_question(call: CallbackQuery, state: FSMContext, bot: Bo
         content_type = "basic"
         
     json_path = os.path.join(Config.PROJECT_DIR, "data", "uni_info.json")
-    uni_info = files_interactions.json_loads(json_path=json_path)
+    uni_info = await files_interactions.json_loads(json_path=json_path)
     table_description = uni_info.get('table_description')
     content_description = table_description[content_type]
     website = uni_info.get("website")
@@ -66,7 +66,7 @@ async def wait_for_your_question(call: CallbackQuery, state: FSMContext, bot: Bo
 
 
 @user_message_router.message()
-async def take_query_from_user(message: Message, bot: Bot, state: FSMContext):
+async def take_query_from_user(message: Message, state: FSMContext, bot: Bot):
     """
     Обрабатываем ответ
     Делаем запрос к API AI-Помощник
@@ -102,7 +102,7 @@ async def take_query_from_user(message: Message, bot: Bot, state: FSMContext):
     
 
 @user_message_router.callback_query(F.data == 'button_show_relevant_links')
-async def button_show_relevant_links(call: CallbackQuery, bot: Bot, state: FSMContext):
+async def button_show_relevant_links(call: CallbackQuery, state: FSMContext, bot: Bot):
     """
     Обрабатываем кнопку показа релевантных ссылок
     """
