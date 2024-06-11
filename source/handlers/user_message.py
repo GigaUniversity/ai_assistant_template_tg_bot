@@ -101,11 +101,30 @@ async def take_query_from_user(message: Message, state: FSMContext, bot: Bot):
         all_responses = await form_the_dict_all_responses(all_responses=data.get('all_responses'),
                                                         current_response=current_response)
         await state.update_data(all_responses=all_responses)
-        logger.info(f'Пользователь {message.from_user.id} на вопрос {message.text} получил ответ {response_json.get("final_answer")}')
+        logger_of_success_response = {"user": message.chat.id,
+                                      "question": message.text,
+                                      "answer": response_json.get('final_answer'),
+                                      "rephrase": response_json.get('rephrased_question'),
+                                      "titles": response_json.get("titles"),
+                                      "urls": response_json.get("urls"),
+                                      "style_of_dialog": dialog_style,
+                                      "content_type": content_type,
+                                      "uni": Config.UNI_ID,
+                                      "message_id": msg.message_id
+                                      }
+        logger.debug(f'Success get query to Kernel "/answer": {logger_of_success_response}')
     else:
         text = messages.im_not_working()
         await bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id,
                                     text=text)
+        logger_of_failed_response = {"user": message.chat.id,
+                                     "question": message.text.replace("\n", r"\n"),
+                                     "style_of_dialog": dialog_style,
+                                     "content_type": content_type,
+                                     "uni": Config.UNI_ID,
+                                     "response_status": response_status,
+                                     "response_json": response_json}
+        logger.warning( f'Failed get query to Kernel "/answer": {logger_of_failed_response}')
     
 
 @user_message_router.callback_query(F.data == 'button_show_relevant_links')
@@ -138,8 +157,7 @@ async def button_answer_reaction(call: CallbackQuery, bot: Bot):
     reaction_logger.info(reaction_info)
     
     text = messages.thanks_for_feedback()
-    await bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id,
-                                text=text)
+    await bot.send_message(chat_id=call.message.chat.id, text=text)
     response_status = await post_query(params=reaction_info, endpoint='/feedback')
     if response_status == 200:
         logger.info(f"Successfully sent feedback to kernel: {reaction_info}")
