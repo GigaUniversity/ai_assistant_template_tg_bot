@@ -91,7 +91,7 @@ async def take_query_from_user(message: Message, state: FSMContext, bot: Bot):
         'message_id': message.message_id,
         'content_type': content_type
     }
-    response_json, response_status = await get_query(params=query, endpoint='/answer')
+    response_status, response_json = await get_query(params=query, endpoint='/answer')
     if response_status == 200:
         text = messages.answer_message(response=response_json)
         msg = await bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id,
