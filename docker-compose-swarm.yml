@@ -22,13 +22,8 @@ services:
       - ./logs:/app/logs
     networks:
       - network
-    environment:
-      - URL_TO_API=${URL_TO_API}
-      - ADMIN_ID=${ADMIN_ID}
-      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
-      - ACCESS_TOKEN=${ACCESS_TOKEN}
-      - UNI_ID=${UNI_ID}
-
+    env_file:
+      - prod.env
 
 networks:
   network:

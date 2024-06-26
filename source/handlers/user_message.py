@@ -94,9 +94,10 @@ async def take_query_from_user(message: Message, state: FSMContext, bot: Bot):
         'chat_id': message.from_user.id,
         'datetime_msg': message.date.strftime('%Y-%m-%d %H:%M:%S'),
         'message_id': message.message_id,
-        'content_type': content_type
+        'content_type': content_type,
+        'retrieval_strategy': 'new'
     }
-    response_status, response_json = await get_query(params=query, endpoint='/answer')
+    response_status, response_json = await get_query(params=query, endpoint='/validation')
     if response_status == 200:
         text = messages.answer_message(response=response_json)
         msg = await bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id,
