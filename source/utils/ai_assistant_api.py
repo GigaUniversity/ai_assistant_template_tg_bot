@@ -30,7 +30,7 @@ async def post_query(json: dict, endpoint: str):
     """
     url = f"{Config.URL_TO_API}{endpoint}"
     async with aiohttp.ClientSession() as session:
-        async with session.post(headers=headers, url=url, json=params) as response:
+        async with session.post(headers=headers, url=url, json=json) as response:
             try:
                 return response.status
             except Exception as e:
