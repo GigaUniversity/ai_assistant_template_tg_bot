@@ -95,7 +95,8 @@ async def take_query_from_user(message: Message, state: FSMContext, bot: Bot):
         'datetime_msg': message.date.strftime('%Y-%m-%d %H:%M:%S'),
         'message_id': message.message_id,
         'content_type': content_type,
-        'retrieval_strategy': 'new'
+        'retrieval_strategy': 'new',
+        'new_n_docs': 10
     }
     response_status, response_json = await get_query(params=query, endpoint='/validation')
     if response_status == 200:
