@@ -98,7 +98,7 @@ async def take_query_from_user(message: Message, state: FSMContext, bot: Bot):
         'retrieval_strategy': 'new',
         'new_n_docs': 10
     }
-    response_status, response_json = await post_query(params=query, endpoint='/validation')
+    response_status, response_json = await post_query(json=query, endpoint='/validation')
     if response_status == 200:
         text = messages.answer_message(response=response_json)
         msg = await bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id,
@@ -165,7 +165,7 @@ async def button_answer_reaction(call: CallbackQuery, bot: Bot):
     
     text = messages.thanks_for_feedback()
     await bot.send_message(chat_id=call.message.chat.id, text=text)
-    response_status = await post_query(params=reaction_info, endpoint='/feedback')
+    response_status = await post_query(json=reaction_info, endpoint='/feedback')
     if response_status == 200:
         logger.info(f"Successfully sent feedback to kernel: {reaction_info}")
     else:
