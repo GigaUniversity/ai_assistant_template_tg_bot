@@ -24,13 +24,13 @@ async def get_query(params: dict, endpoint: str):
                 return response.status, None
 
 
-async def post_query(params: dict, endpoint: str):
+async def post_query(json: dict, endpoint: str):
     """
     POST-Запрос
     """
     url = f"{Config.URL_TO_API}{endpoint}"
     async with aiohttp.ClientSession() as session:
-        async with session.post(headers=headers, url=url, params=params) as response:
+        async with session.post(headers=headers, url=url, json=params) as response:
             try:
                 return response.status
             except Exception as e:

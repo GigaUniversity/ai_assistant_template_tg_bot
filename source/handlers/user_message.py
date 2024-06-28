@@ -98,7 +98,7 @@ async def take_query_from_user(message: Message, state: FSMContext, bot: Bot):
         'retrieval_strategy': 'new',
         'new_n_docs': 10
     }
-    response_status, response_json = await get_query(params=query, endpoint='/validation')
+    response_status, response_json = await post_query(params=query, endpoint='/validation')
     if response_status == 200:
         text = messages.answer_message(response=response_json)
         msg = await bot.edit_message_text(chat_id=message.chat.id, message_id=msg.message_id,
