@@ -32,7 +32,7 @@ async def post_query(json: dict, endpoint: str):
     async with aiohttp.ClientSession() as session:
         async with session.post(headers=headers, url=url, json=json) as response:
             try:
-                return response.status
+                return response.status, await response.json()
             except Exception as e:
                 log_error_dict = {"where": "post_query",
                                   "url": url,
@@ -40,4 +40,4 @@ async def post_query(json: dict, endpoint: str):
                                   "response_status": response.status,
                                   "response_text": await response.text}
                 logger.error(log_error_dict)
-                return response.status
+                return response.status, await response.json()
