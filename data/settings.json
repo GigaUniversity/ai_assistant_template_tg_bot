@@ -1,0 +1,13 @@
+{
+  "link_to_feedback": "https://oprosso.ru/p/xhKWdRr3jFG9aqAPD",
+  "commands_for_bot": [
+    {
+      "command": "start",
+      "description": "Запустить бота"
+    },
+    {
+      "command": "take_the_survey",
+      "description": "Оставить отзыв"
+    }
+  ]
+}

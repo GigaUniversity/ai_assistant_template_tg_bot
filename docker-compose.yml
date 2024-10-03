@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  tg_bot:
+    image: ai_assistant_template_tg_bot:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - ./logs:/app/logs
+    env_file:
+      - .env

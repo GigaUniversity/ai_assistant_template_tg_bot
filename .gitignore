@@ -1,0 +1,5 @@
+venv
+logs
+__pycache__
+.env
+uni_info.json
